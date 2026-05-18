@@ -6,115 +6,145 @@ import audioFile from '../assets/audio/a-thousand-years.mp3';
 
 const AudioPlayer = ({ lang = 'es' }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef(null);
+  const fadeRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(audioFile);
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.6;
+    const audio = new Audio(audioFile);
+    audio.loop = true;
+    audio.volume = 0;
+    audioRef.current = audio;
 
-    // Auto-play on first user interaction (browsers require it)
-    const handleFirstInteraction = () => {
-      if (!hasInteracted && audioRef.current) {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-          setHasInteracted(true);
-        }).catch(() => {});
-      }
+    // Fade-in volume function
+    const fadeIn = () => {
+      let vol = 0;
+      clearInterval(fadeRef.current);
+      fadeRef.current = setInterval(() => {
+        if (audioRef.current && vol < 0.65) {
+          vol = Math.min(vol + 0.02, 0.65);
+          audioRef.current.volume = vol;
+        } else {
+          clearInterval(fadeRef.current);
+        }
+      }, 80);
     };
 
     // Try immediate autoplay
-    audioRef.current.play().then(() => {
-      setIsPlaying(true);
-      setHasInteracted(true);
-    }).catch(() => {
-      // Fallback: play on first click/touch anywhere
-      document.addEventListener('click', handleFirstInteraction, { once: true });
-      document.addEventListener('touchstart', handleFirstInteraction, { once: true });
-    });
+    audio.play()
+      .then(() => { setIsPlaying(true); fadeIn(); })
+      .catch(() => {
+        // Fallback: play on first interaction
+        const onInteract = () => {
+          audio.play().then(() => { setIsPlaying(true); fadeIn(); }).catch(() => {});
+          document.removeEventListener('click', onInteract);
+          document.removeEventListener('touchstart', onInteract);
+        };
+        document.addEventListener('click', onInteract, { once: true });
+        document.addEventListener('touchstart', onInteract, { once: true });
+      });
 
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
+      clearInterval(fadeRef.current);
+      audio.pause();
+      audio.src = '';
     };
   }, []);
 
   const togglePlay = (e) => {
     e.stopPropagation();
+    if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.play();
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
-    setIsPlaying(!isPlaying);
-    setHasInteracted(true);
   };
 
-  const label = lang === 'es'
-    ? (isPlaying ? 'Pausar música' : 'Reproducir música')
-    : (isPlaying ? 'Pause music' : 'Play music');
+  const label = isPlaying
+    ? (lang === 'es' ? 'Pausar música' : 'Pause music')
+    : (lang === 'es' ? 'Reproducir música' : 'Play music');
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 1.5, duration: 0.5 }}
+      initial={{ opacity: 0, scale: 0, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 2, duration: 0.6, type: 'spring', stiffness: 180 }}
       style={{
         position: 'fixed',
-        bottom: '30px',
-        right: '30px',
-        zIndex: 1000,
+        bottom: 28,
+        right: 28,
+        zIndex: 9000,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '6px',
+        gap: 6,
       }}
     >
       {/* Pulse ring when playing */}
       {isPlaying && (
-        <motion.div
-          animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          style={{
-            position: 'absolute',
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
-            border: '2px solid var(--color-gold)',
-            pointerEvents: 'none',
-          }}
-        />
+        <>
+          <motion.div
+            animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0, 0.5] }}
+            transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+            style={{
+              position: 'absolute',
+              width: 52, height: 52,
+              borderRadius: '50%',
+              border: '1.5px solid var(--color-gold)',
+              pointerEvents: 'none',
+            }}
+          />
+          <motion.div
+            animate={{ scale: [1, 1.9, 1], opacity: [0.3, 0, 0.3] }}
+            transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut', delay: 0.5 }}
+            style={{
+              position: 'absolute',
+              width: 52, height: 52,
+              borderRadius: '50%',
+              border: '1px solid rgba(212,175,55,0.4)',
+              pointerEvents: 'none',
+            }}
+          />
+        </>
       )}
-      <button
+
+      <motion.button
         onClick={togglePlay}
         title={label}
         aria-label={label}
-        className="glow-effect"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.92 }}
         style={{
-          width: '50px',
-          height: '50px',
+          width: 50, height: 50,
           borderRadius: '50%',
-          backgroundColor: 'var(--color-champagne)',
+          background: 'linear-gradient(135deg, var(--color-champagne), var(--color-nude))',
           border: '1px solid var(--color-gold)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           cursor: 'pointer',
-          boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)',
+          boxShadow: '0 4px 20px rgba(212,175,55,0.35), 0 0 40px rgba(212,175,55,0.1)',
           color: 'var(--color-gold)',
           position: 'relative',
         }}
       >
-        {isPlaying ? <Volume2 size={22} /> : <VolumeX size={22} />}
-      </button>
-      <span style={{ fontSize: '0.65rem', color: 'var(--color-gold)', letterSpacing: '1px', textTransform: 'uppercase', opacity: 0.8 }}>
-        {isPlaying ? '♪ ♫' : '—'}
-      </span>
+        {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
+      </motion.button>
+
+      <motion.span
+        animate={isPlaying ? { opacity: [0.6, 1, 0.6] } : { opacity: 0.4 }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+        style={{
+          fontSize: '0.6rem',
+          color: 'var(--color-gold)',
+          letterSpacing: '1px',
+          textTransform: 'uppercase',
+          fontFamily: 'var(--font-sans)',
+        }}
+      >
+        {isPlaying ? '♪ ♫ ♪' : '—'}
+      </motion.span>
     </motion.div>
   );
 };

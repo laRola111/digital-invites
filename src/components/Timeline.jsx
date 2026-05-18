@@ -2,40 +2,79 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Church, Utensils, Music, Sparkles } from 'lucide-react';
 
-const events = [
-  {
-    time: "10:00 AM",
-    title: "Misa",
-    location: "Santa Bárbara",
-    address: "13713 FM 969, Austin, TX 78725",
-    mapLink: "https://maps.google.com/?q=13713+FM+969,+Austin,+TX+78725",
-    icon: <Church size={24} />
-  },
-  {
-    time: "5:00 PM - 7:00 PM",
-    title: "Comida",
-    location: "Recepción: Salon Meres",
-    address: "1141 FM 969 Farm-To-Market Rd, Bastrop, TX 78602",
-    mapLink: "https://maps.google.com/?q=1141+FM+969+Farm-To-Market+Rd,+Bastrop,+TX+78602",
-    icon: <Utensils size={24} />
-  },
-  {
-    time: "7:00 PM - 8:00 PM",
-    title: "Presentación",
-    location: "Salon Meres",
-    address: "",
-    icon: <Sparkles size={24} />
-  },
-  {
-    time: "9:00 PM - 1:00 AM",
-    title: "Baile",
-    location: "Salon Meres",
-    address: "",
-    icon: <Music size={24} />
-  }
-];
+const eventsData = {
+  es: [
+    {
+      time: "10:00 AM",
+      title: "Misa",
+      location: "Santa Bárbara",
+      address: "13713 FM 969, Austin, TX 78725",
+      mapLink: "https://maps.google.com/?q=13713+FM+969,+Austin,+TX+78725",
+      icon: <Church size={24} />
+    },
+    {
+      time: "5:00 PM – 7:00 PM",
+      title: "Comida",
+      location: "Recepción: Salon Meres",
+      address: "1141 FM 969 Farm-To-Market Rd, Bastrop, TX 78602",
+      mapLink: "https://maps.google.com/?q=1141+FM+969+Farm-To-Market+Rd,+Bastrop,+TX+78602",
+      icon: <Utensils size={24} />
+    },
+    {
+      time: "7:00 PM – 8:00 PM",
+      title: "Presentación",
+      location: "Salon Meres",
+      address: "",
+      icon: <Sparkles size={24} />
+    },
+    {
+      time: "9:00 PM – 1:00 AM",
+      title: "Baile",
+      location: "Salon Meres",
+      address: "",
+      icon: <Music size={24} />
+    }
+  ],
+  en: [
+    {
+      time: "10:00 AM",
+      title: "Mass",
+      location: "Santa Bárbara Church",
+      address: "13713 FM 969, Austin, TX 78725",
+      mapLink: "https://maps.google.com/?q=13713+FM+969,+Austin,+TX+78725",
+      icon: <Church size={24} />
+    },
+    {
+      time: "5:00 PM – 7:00 PM",
+      title: "Dinner",
+      location: "Reception: Salon Meres",
+      address: "1141 FM 969 Farm-To-Market Rd, Bastrop, TX 78602",
+      mapLink: "https://maps.google.com/?q=1141+FM+969+Farm-To-Market+Rd,+Bastrop,+TX+78602",
+      icon: <Utensils size={24} />
+    },
+    {
+      time: "7:00 PM – 8:00 PM",
+      title: "Presentation",
+      location: "Salon Meres",
+      address: "",
+      icon: <Sparkles size={24} />
+    },
+    {
+      time: "9:00 PM – 1:00 AM",
+      title: "Dance Party",
+      location: "Salon Meres",
+      address: "",
+      icon: <Music size={24} />
+    }
+  ]
+};
 
-const Timeline = () => {
+const mapLabel = { es: 'Ver ubicación', en: 'Get directions' };
+const sectionTitle = { es: 'Itinerario', en: 'Schedule' };
+
+const Timeline = ({ lang = 'es' }) => {
+  const events = eventsData[lang];
+
   return (
     <section className="section-container bg-bg-light" style={{ padding: '2rem 1rem' }}>
       <motion.div
@@ -45,22 +84,29 @@ const Timeline = () => {
         transition={{ duration: 1 }}
         style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}
       >
-        <h2 className="text-gold" style={{ fontSize: '2.5rem', textAlign: 'center', marginBottom: '2rem' }}>Itinerario</h2>
+        <h2 className="text-gold" style={{ fontSize: '2.5rem', textAlign: 'center', marginBottom: '2rem' }}>
+          {sectionTitle[lang]}
+        </h2>
+
+        {/* Date header */}
+        <p style={{ textAlign: 'center', color: '#888', letterSpacing: '3px', textTransform: 'uppercase', fontSize: '0.85rem', marginBottom: '2rem', fontFamily: 'var(--font-sans)' }}>
+          {lang === 'es' ? 'Viernes · 24 de Julio · 2026' : 'Friday · July 24 · 2026'}
+        </p>
 
         <div style={{ position: 'relative' }}>
           {/* Vertical Line */}
-          <div style={{ 
-            position: 'absolute', 
-            left: '50%', 
-            transform: 'translateX(-50%)', 
-            width: '2px', 
-            height: '100%', 
+          <div style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '2px',
+            height: '100%',
             background: 'linear-gradient(to bottom, var(--color-gold), var(--color-champagne))',
-            opacity: 0.5 
+            opacity: 0.5
           }} />
 
           {events.map((evt, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -106,10 +152,10 @@ const Timeline = () => {
                 <p style={{ color: 'var(--color-gold)', fontWeight: '500', marginBottom: '1rem', fontFamily: 'var(--font-sans)' }}>{evt.time}</p>
                 <p style={{ color: 'var(--color-text)', marginBottom: '0.5rem' }}>{evt.location}</p>
                 {evt.address && <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1.5rem' }}>{evt.address}</p>}
-                
+
                 {evt.mapLink && (
                   <a href={evt.mapLink} target="_blank" rel="noopener noreferrer" className="btn-outline">
-                    <MapPin size={16} /> Ver ubicación
+                    <MapPin size={16} /> {mapLabel[lang]}
                   </a>
                 )}
               </div>

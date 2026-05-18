@@ -1,12 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const Countdown = () => {
+const text = {
+  es: {
+    title: 'Ya falta poco',
+    days: 'Días',
+    hours: 'Hrs',
+    minutes: 'Min',
+    seconds: 'Seg',
+    arrived: '¡El gran día ha llegado!',
+  },
+  en: {
+    title: 'Counting Down',
+    days: 'Days',
+    hours: 'Hrs',
+    minutes: 'Min',
+    seconds: 'Sec',
+    arrived: 'The big day is here!',
+  }
+};
+
+const Countdown = ({ lang = 'es' }) => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [expired, setExpired] = useState(false);
+  const t = text[lang];
 
   useEffect(() => {
-    // Target date: May 18, 2026 (assuming this based on the date from Welcome screen)
-    const targetDate = new Date("May 18, 2026 10:00:00").getTime();
+    // Target date: July 24, 2026 at 10:00 AM
+    const targetDate = new Date("July 24, 2026 10:00:00").getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -20,6 +41,7 @@ const Countdown = () => {
           seconds: Math.floor((difference % (1000 * 60)) / 1000)
         });
       } else {
+        setExpired(true);
         clearInterval(interval);
       }
     }, 1000);
@@ -57,14 +79,23 @@ const Countdown = () => {
         transition={{ duration: 1 }}
         style={{ textAlign: 'center' }}
       >
-        <h2 className="text-gold" style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Ya falta poco</h2>
-        
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-          <TimeUnit value={timeLeft.days} label="Días" />
-          <TimeUnit value={timeLeft.hours} label="Hrs" />
-          <TimeUnit value={timeLeft.minutes} label="Min" />
-          <TimeUnit value={timeLeft.seconds} label="Seg" />
-        </div>
+        <h2 className="text-gold" style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>
+          {expired ? t.arrived : t.title}
+        </h2>
+
+        {!expired && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
+            <TimeUnit value={timeLeft.days} label={t.days} />
+            <TimeUnit value={timeLeft.hours} label={t.hours} />
+            <TimeUnit value={timeLeft.minutes} label={t.minutes} />
+            <TimeUnit value={timeLeft.seconds} label={t.seconds} />
+          </div>
+        )}
+
+        {/* Event date reminder */}
+        <p style={{ marginTop: '1.5rem', color: '#888', fontFamily: 'var(--font-sans)', fontSize: '0.9rem', letterSpacing: '2px' }}>
+          {lang === 'es' ? '24 · Julio · 2026' : 'July 24 · 2026'}
+        </p>
       </motion.div>
     </section>
   );

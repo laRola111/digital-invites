@@ -3,7 +3,24 @@ import { motion } from 'framer-motion';
 
 import finalPhoto from '../assets/images/photo5.jpg';
 
-const Footer = () => {
+const text = {
+  es: {
+    heading: '¡Te espero!',
+    quote: '"Gracias por acompañarnos en este día tan especial."',
+    date: 'Viernes · 24 de Julio · 2026',
+    location: 'Austin & Bastrop, TX',
+  },
+  en: {
+    heading: "We can't wait to see you!",
+    quote: '"Thank you for celebrating this special day with us."',
+    date: 'Friday · July 24 · 2026',
+    location: 'Austin & Bastrop, TX',
+  }
+};
+
+const Footer = ({ lang = 'es' }) => {
+  const t = text[lang];
+
   return (
     <section className="section-container bg-champagne" style={{ position: 'relative', overflow: 'hidden' }}>
       <motion.div
@@ -29,28 +46,40 @@ const Footer = () => {
           boxShadow: '0 10px 30px rgba(212, 175, 55, 0.4)',
           marginBottom: '2rem'
         }}>
-          <img 
-            src={finalPhoto} 
-            alt="Emily Final" 
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          <img
+            src={finalPhoto}
+            alt="Christina"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
 
         <h2 className="text-gold" style={{ fontSize: '2.2rem', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>
-          ¡Te espero!
+          {t.heading}
         </h2>
-        
-        <p style={{ 
-          fontSize: '1.2rem', 
-          color: 'var(--color-text)', 
-          fontStyle: 'italic', 
+
+        <p style={{
+          fontSize: '1.2rem',
+          color: 'var(--color-text)',
+          fontStyle: 'italic',
           fontFamily: 'var(--font-serif)',
-          lineHeight: '1.6' 
+          lineHeight: '1.6'
         }}>
-          "Gracias por acompañarnos en este día tan especial."
+          {t.quote}
+        </p>
+
+        <p style={{ marginTop: '1.5rem', color: 'var(--color-gold)', fontFamily: 'var(--font-sans)', fontSize: '0.9rem', letterSpacing: '2px', textTransform: 'uppercase' }}>
+          {t.date}
+        </p>
+
+        <p style={{ color: '#888', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+          {t.location}
         </p>
 
         <div style={{ marginTop: '3rem', width: '50px', height: '1px', backgroundColor: 'var(--color-gold)' }} />
+
+        <p style={{ marginTop: '1rem', fontSize: '0.75rem', color: '#aaa', letterSpacing: '1px' }}>
+          Christina XV Años · 2026
+        </p>
       </motion.div>
     </section>
   );

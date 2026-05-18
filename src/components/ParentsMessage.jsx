@@ -1,19 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const ParentsMessage = () => {
+const text = {
+  es: {
+    title: 'Mis Padres',
+    quote: '"La vida se disfruta de momentos y este momento es tan especial que queremos que ustedes sean partícipes en la celebración de mis quince años."',
+    sign: 'Con amor, Christina · Julio 24, 2026',
+  },
+  en: {
+    title: 'A Message from My Parents',
+    quote: '"Life is made of moments, and this moment is so special that we want you to be part of the celebration of our daughter\'s quinceañera."',
+    sign: 'With love, Christina · July 24, 2026',
+  }
+};
+
+const ParentsMessage = ({ lang = 'es' }) => {
+  const t = text[lang];
+
   return (
     <section id="parents" className="section-container" style={{ backgroundColor: '#fff', position: 'relative' }}>
-      <div 
-        className="absolute inset-0" 
+      <div
+        className="absolute inset-0"
         style={{
           backgroundImage: 'radial-gradient(var(--color-champagne) 1px, transparent 1px)',
           backgroundSize: '40px 40px',
           opacity: 0.3
         }}
       />
-      
-      <motion.div 
+
+      <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -30,25 +45,27 @@ const ParentsMessage = () => {
           zIndex: 1
         }}
       >
-        <h2 className="text-gold" style={{ fontSize: '2rem', marginBottom: '2rem' }}>Mis Padres</h2>
-        
-        <p style={{ 
-          fontSize: '1.2rem', 
-          lineHeight: '1.8', 
+        <h2 className="text-gold" style={{ fontSize: '2rem', marginBottom: '2rem' }}>{t.title}</h2>
+
+        <p style={{
+          fontSize: '1.2rem',
+          lineHeight: '1.8',
           color: 'var(--color-text)',
           fontFamily: 'var(--font-serif)',
           fontStyle: 'italic',
           marginBottom: '2rem'
         }}>
-          "La vida se disfruta de momentos y este momento es tan especial que queremos que ustedes sean partícipes en la celebración de los quince años de nuestros hijos."
+          {t.quote}
         </p>
 
         <p style={{
-          fontSize: '1.1rem',
+          fontSize: '1rem',
           color: 'var(--color-text)',
-          fontWeight: 500
+          fontWeight: 500,
+          letterSpacing: '1px',
+          fontFamily: 'var(--font-sans)',
         }}>
-          Emily y Marco Jiménez, que Dios nos ha regalado la oportunidad de llegar a tan hermoso momento.
+          {t.sign}
         </p>
       </motion.div>
     </section>

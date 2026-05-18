@@ -90,8 +90,11 @@ const WelcomeScreen = ({ lang = 'es' }) => {
           transition={{ delay: 1.2, duration: 1 }}
         >
           <h1 style={{ fontSize: '3rem', color: 'var(--color-text)', margin: '1rem 0', lineHeight: 1 }}>
-            Christina
+            Emily &amp; Marco
           </h1>
+          <p style={{ fontSize: '1rem', color: '#888', fontFamily: 'var(--font-sans)', letterSpacing: '1px' }}>
+            Jiménez
+          </p>
           <p style={{ fontSize: '1rem', color: '#666', letterSpacing: '2px', fontFamily: 'var(--font-sans)' }}>
             {t.date}
           </p>

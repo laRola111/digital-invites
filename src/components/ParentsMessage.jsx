@@ -4,13 +4,13 @@ import { motion } from 'framer-motion';
 const text = {
   es: {
     title: 'Mis Padres',
-    quote: '"La vida se disfruta de momentos y este momento es tan especial que queremos que ustedes sean partícipes en la celebración de mis quince años."',
-    sign: 'Con amor, Christina · Julio 24, 2026',
+    quote: '"La vida se disfruta de momentos y este momento es tan especial que queremos que ustedes sean partícipes en la celebración de los quince años de nuestros hijos Emily y Marco Jiménez, que Dios les ha regalado la oportunidad de llegar a tan hermoso momento."',
+    sign: 'Con amor, la familia Jiménez',
   },
   en: {
-    title: 'A Message from My Parents',
-    quote: '"Life is made of moments, and this moment is so special that we want you to be part of the celebration of our daughter\'s quinceañera."',
-    sign: 'With love, Christina · July 24, 2026',
+    title: 'A Message from Our Parents',
+    quote: '"Life is made of beautiful moments, and this one is so special that we want you to share in the celebration of our children Emily and Marco Jiménez\'s quinceañera. God has blessed us with the gift of reaching this beautiful milestone together."',
+    sign: 'With love, the Jiménez family',
   }
 };
 

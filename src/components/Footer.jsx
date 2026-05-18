@@ -5,7 +5,7 @@ import finalPhoto from '../assets/images/photo5.jpg';
 
 const text = {
   es: {
-    heading: '¡Te espero!',
+    heading: '¡Los esperamos!',
     quote: '"Gracias por acompañarnos en este día tan especial."',
     date: 'Viernes · 24 de Julio · 2026',
     location: 'Austin & Bastrop, TX',
@@ -78,7 +78,7 @@ const Footer = ({ lang = 'es' }) => {
         <div style={{ marginTop: '3rem', width: '50px', height: '1px', backgroundColor: 'var(--color-gold)' }} />
 
         <p style={{ marginTop: '1rem', fontSize: '0.75rem', color: '#aaa', letterSpacing: '1px' }}>
-          Christina XV Años · 2026
+          Emily & Marco Jiménez · XV Años 2026
         </p>
       </motion.div>
     </section>

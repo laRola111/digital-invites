@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import finalPhoto from '../assets/images/photo5.jpg';
+import finalPhoto from '../assets/images/photo3.jpg';
 
 const content = {
   es: {

@@ -310,7 +310,7 @@ const EnvelopeOpening = ({ lang = 'es', onComplete }) => {
                         textTransform: 'uppercase',
                       }}
                     >
-                      Jiménez
+                      Jiménez López
                     </motion.p>
 
                     <motion.p

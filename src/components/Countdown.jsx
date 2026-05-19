@@ -175,7 +175,7 @@ const Countdown = ({ lang = 'es' }) => {
           textTransform: 'uppercase',
           marginBottom: '0.8rem',
         }}>
-          Emily &amp; Marco Jiménez
+          Emily &amp; Marco Jiménez López
         </p>
         <h2
           className="animate-glow"

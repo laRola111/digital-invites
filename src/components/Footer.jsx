@@ -8,14 +8,14 @@ const content = {
     quote: '"Gracias por acompañarnos en este día tan especial."',
     date: 'Viernes · 24 de Julio · 2026',
     location: 'Austin & Bastrop, Texas',
-    credit: 'Emily & Marco Jiménez · XV Años 2026',
+    credit: 'Emily & Marco Jiménez López · XV Años 2026',
   },
   en: {
     heading: "We can't wait to see you!",
     quote: '"Thank you for celebrating this special day with us."',
     date: 'Friday · July 24 · 2026',
     location: 'Austin & Bastrop, Texas',
-    credit: 'Emily & Marco Jiménez · XV Years 2026',
+    credit: 'Emily & Marco Jiménez López · XV Years 2026',
   },
 };
 

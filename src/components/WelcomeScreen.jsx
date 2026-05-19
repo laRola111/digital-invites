@@ -65,7 +65,7 @@ const WelcomeScreen = ({ lang = 'es', isActive = false }) => {
       >
         <img
           src={mainPhoto}
-          alt="Emily & Marco Jiménez"
+          alt="Emily & Marco Jiménez López"
           style={{
             width: '100%',
             height: '100%',
@@ -166,7 +166,7 @@ const WelcomeScreen = ({ lang = 'es', isActive = false }) => {
               marginBottom: '0.5rem',
             }}
           >
-            Jiménez
+            Jiménez López
           </motion.p>
         )}
 
